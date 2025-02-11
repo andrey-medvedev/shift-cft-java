@@ -11,18 +11,27 @@ import java.nio.file.*;
 
 public class FileWriterService {
 
-    private static final String path = "src/main/resources";
+    private final String path;
 
-    public FileWriterService() {}
+    public FileWriterService(String path) {
+        this.path = path;
+    }
 
-    public static void createFile(String fileName) {
+    public void createFile(String fileName) {
         try {
-            Path testFile = Files.createFile(Paths.get(path + fileName));
-            System.out.printf("Был ли файл успешно создан? Ответ: %s\n", Files.exists(testFile));
-        } catch (FileAlreadyExistsException e) {
-            System.out.printf("Файл с названием %s уже существует, введите другое имя файла\n", fileName);
+            Path createFile = Files.createFile(Paths.get(path + fileName + ".txt"));
+            System.out.printf("Был ли файл успешно создан? Ответ: %s\n", Files.exists(createFile));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Что-то прошло не так " + e.getMessage());
+        }
+    }
+
+    public void writeData(String fileName, String data) {
+        try {
+            Files.writeString(Paths.get(path + fileName + ".txt"),
+                    String.format("%s\n", data), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Что-то прошло не так " + e.getMessage());
         }
     }
 }
