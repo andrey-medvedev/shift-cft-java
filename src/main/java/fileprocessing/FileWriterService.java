@@ -4,20 +4,18 @@
     - дозаписывание данных в уже существующие файлы
 */
 
-package util.io;
+package fileprocessing;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FileWriterService {
+public final class FileWriterService {
 
-    private final String path;
+    private FileWriterService() {}
 
-    public FileWriterService(String path) {
-        this.path = path;
-    }
-
-    public void createFile(String fileName) {
+    public static void createFile(String path, String fileName) {
         try {
             Path createFile = Files.createFile(Paths.get(path + fileName + ".txt"));
             System.out.printf("Был ли файл успешно создан? Ответ: %s\n", Files.exists(createFile));
@@ -26,10 +24,12 @@ public class FileWriterService {
         }
     }
 
-    public void writeData(String fileName, String data) {
+    public static void writeData(String path, String fileName, List<?> data) {
+        Path p = Paths.get(path + fileName);
         try {
-            Files.writeString(Paths.get(path + fileName + ".txt"),
-                    String.format("%s\n", data), StandardOpenOption.APPEND);
+            for (Object element : data) {
+                Files.writeString(p, String.format("%s\n", element), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            }
         } catch (IOException e) {
             System.out.println("Что-то прошло не так " + e.getMessage());
         }

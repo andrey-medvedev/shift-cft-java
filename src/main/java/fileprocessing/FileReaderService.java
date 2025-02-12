@@ -6,21 +6,17 @@
     - определять тип строки и передавать обработчику (скорее для класса, обрабатывающего аргументы с консоли)
 */
 
-package util.io;
+package fileprocessing;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
 
-public class FileReaderService {
+public final class FileReaderService {
 
-    private final String path;
+    private FileReaderService() {}
 
-    public FileReaderService(String path) {
-        this.path = path;
-    }
-
-    public void returnExistingFile() {
+    public static void returnExistingFile(String path) {
         Path p = Paths.get(path);
         try (DirectoryStream<Path> files = Files.newDirectoryStream(p)) {
             for(Path file : files) {
@@ -31,15 +27,14 @@ public class FileReaderService {
         }
     }
 
-    public void readFile(String fileName) {
-        Path p = Paths.get(path + fileName + ".txt");
+    public static List<String> readFile(String path, String fileName) {
+        Path p = Paths.get(path + fileName);
         try {
             List<String> list = Files.readAllLines(p);
-            for(String str : list) {
-                System.out.println(str);
-            }
+            return list;
         } catch (IOException e) {
             System.out.println("Что-то прошло не так " + e.getMessage());
         }
+        return null;
     }
 }
