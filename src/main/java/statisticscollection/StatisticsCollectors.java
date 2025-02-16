@@ -1,7 +1,7 @@
 package statisticscollection;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Collections;
 
 public class StatisticsCollectors {
 
@@ -31,16 +31,58 @@ public class StatisticsCollectors {
         System.out.printf("Количество строк, добавленных в файл = %d\n", strCount);
     }
 
-    // еще подумать над реализацией
     public void printFullStatistics() {
-        Collections.sort(intList);
-        Collections.sort(floatList);
-        Collections.sort(strList);
+        printIntStatistics();
+        System.out.println();
+        printFloatStatistics();
+        System.out.println();
+        printStringStatistics();
+    }
 
-        System.out.println("Полная статистика:");
+    private void printIntStatistics() {
+        System.out.println("Полная статистика для целых чисел:");
         System.out.printf("Количество целых чисел, добавленных в файл = %d\n", intCount);
-        System.out.println(intList);
-        System.out.println(floatList);
-        System.out.println(strList);
+        if (intCount > 0) {
+            System.out.printf("""
+                    Минимальное значение = %d
+                    Максимальное значение = %d
+                    Сумма чисел = %d
+                    Среднее всех чисел = %.2f
+                    """,
+                    intList.stream().min(Integer::compareTo).get(),
+                    intList.stream().max(Integer::compareTo).get(),
+                    intList.stream().mapToInt(Integer::intValue).sum(),
+                    intList.stream().mapToInt(Integer::intValue).average().getAsDouble());
+        }
+    }
+
+    private void printFloatStatistics() {
+        System.out.println("Полная статистика для вещественных чисел:");
+        System.out.printf("Количество вещественных чисел, добавленных в файл = %d\n", floatCount);
+        if(floatCount > 0) {
+            System.out.printf("""
+                    Минимальное значение = %.2f
+                    Максимальное значение = %.2f
+                    Сумма чисел = %.2f
+                    Среднее всех чисел = %.2f
+                    """,
+                    floatList.stream().min(Float::compareTo).get(),
+                    floatList.stream().max(Float::compareTo).get(),
+                    floatList.stream().mapToDouble(Float::floatValue).sum(),
+                    floatList.stream().mapToDouble(Float::floatValue).average().getAsDouble());
+        }
+    }
+
+    private void printStringStatistics() {
+        System.out.println("Полная статистика для строк:");
+        System.out.printf("Количество строк, добавленных в файл = %d\n", strCount);
+        if(strCount > 0) {
+            System.out.printf("""
+                    Длинна самой короткой строки = %s
+                    Длина самой длинной строки = %s
+                    """,
+                    strList.stream().map(String::length).min(Comparator.comparing(Integer::intValue)).get(),
+                    strList.stream().map(String::length).max(Comparator.comparing(Integer::intValue)).get());
+        }
     }
 }

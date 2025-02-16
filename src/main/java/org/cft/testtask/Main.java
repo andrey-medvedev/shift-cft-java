@@ -20,7 +20,7 @@ public class Main {
          }
 
          FileProcessorUtil fileProcessorUtil = new FileProcessorUtil(argumentsParser,
-                 "src/main/resources/");
+                 "cft-test-task/src/main/resources/");
          fileProcessorUtil.processFiles();
 
     }

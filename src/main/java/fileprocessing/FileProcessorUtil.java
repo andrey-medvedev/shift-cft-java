@@ -34,13 +34,14 @@ public class FileProcessorUtil {
 
     public void processFiles() {
 
-        String path = outputPath == null ? PATH : outputPath;
-        List<String> dataFromTxt = new ArrayList<>();
+        this.outputPath = this.outputPath == null ? PATH : outputPath;
+        this.prefix = this.prefix == null ? "" : this.prefix;
+        List<String> dataFromTxt;
         List<String> allDAta = new ArrayList<>();
 
         // чтение файлов
         for(String inputFile : inputFiles) {
-            dataFromTxt = FileReaderService.readFile(path, inputFile);
+            dataFromTxt = FileService.readFile(inputFile);
             for(String data : dataFromTxt) {
                 allDAta.add(data);
             }
@@ -51,9 +52,15 @@ public class FileProcessorUtil {
         dataFilter.filterValues(allDAta);
 
         // Запись в выходные файлы
-        FileWriterService.writeData(path, "result_int.txt", dataFilter.getIntList());
-        FileWriterService.writeData(path, "result_float.txt", dataFilter.getFloatList());
-        FileWriterService.writeData(path, "result_str.txt", dataFilter.getStrList());
+        if(!dataFilter.getIntList().isEmpty()) {
+            FileService.writeData(outputPath, prefix + "integers.txt", dataFilter.getIntList(), appendMode);
+        }
+        if (!dataFilter.getFloatList().isEmpty()) {
+            FileService.writeData(outputPath, prefix + "floats.txt", dataFilter.getFloatList(), appendMode);
+        }
+        if (!dataFilter.getStrList().isEmpty()) {
+            FileService.writeData(outputPath, prefix + "strings.txt", dataFilter.getStrList(), appendMode);
+        }
 
         // Сбор и вывод статистики
         StatisticsCollectors statisticsCollectors = new StatisticsCollectors(
