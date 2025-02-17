@@ -18,14 +18,20 @@
   </properties>
 
   <dependencies>
-    <!-- Парсер аргументов командной строки -->
+
     <dependency>
       <groupId>com.beust</groupId>
       <artifactId>jcommander</artifactId>
       <version>1.82</version>
     </dependency>
 
-    <!-- Тестирование -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.24</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -35,8 +41,9 @@
   </dependencies>
 
   <build>
+
     <plugins>
-      <!-- Плагин для сборки Fat JAR с зависимостями -->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -54,24 +61,27 @@
               </descriptorRefs>
               <archive>
                 <manifest>
-                  <mainClass>org.cft.testtask.Main</mainClass>
+                  <mainClass>Main</mainClass>
                 </manifest>
               </archive>
+              <finalName>cft-test-task</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
             </configuration>
           </execution>
         </executions>
       </plugin>
 
-      <!-- Плагин для запуска JAR -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.4.0</version>
         <configuration>
-          <mainClass>org.cft.testtask.Main</mainClass>
+          <mainClass>Main</mainClass>
         </configuration>
       </plugin>
+
     </plugins>
+
   </build>
 
 </project>

@@ -1,23 +1,28 @@
-// класс для парсинга аргументов
-
 package arguments;
 
 import com.beust.jcommander.Parameter;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, отвечающий за парсинг аргументов командной строки.
+ */
+@Getter
+@Setter
 public class ArgumentsParser {
 
-    @Parameter(names = "-l", description = "Input files", required = true)
+    @Parameter(names = "-l", description = "Input files")
     private List<String> inputFiles = new ArrayList<>();
 
-    @Parameter(names = "-o", description = "Output path", required = false)
+    @Parameter(names = "-o", description = "Output path")
     private String outputPath;
 
-    @Parameter(names = "-p", description = "Output file prefix", required = false)
+    @Parameter(names = "-p", description = "Output file prefix")
     private String prefix;
 
-    @Parameter(names = "-a", description = "Append mode", required = false)
+    @Parameter(names = "-a", description = "Append mode")
     private boolean appendMode = false;
 
     @Parameter(names = "-s", description = "Short statistics")
@@ -25,52 +30,4 @@ public class ArgumentsParser {
 
     @Parameter(names = "-f", description = "Full statistics")
     private boolean fullStatistics = false;
-
-    public List<String> getInputFiles() {
-        return this.inputFiles;
-    }
-
-    public String getOutputPath() {
-        return this.outputPath;
-    }
-
-    public String getPrefix() {
-        return this.prefix;
-    }
-
-    public boolean isAppendMode() {
-        return this.appendMode;
-    }
-
-    public boolean isShortStatistics() {
-        return this.shortStatistics;
-    }
-
-    public boolean isFullStatistics() {
-        return this.fullStatistics;
-    }
-
-    public void setInputFiles(List<String> inputFiles) {
-        this.inputFiles = inputFiles;
-    }
-
-    public void setOutputPath(String outputPath) {
-        this.outputPath = outputPath;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public void setAppendMode(boolean appendMode) {
-        this.appendMode = appendMode;
-    }
-
-    public void setShortStatistics(boolean shortStatistics) {
-        this.shortStatistics = shortStatistics;
-    }
-
-    public void setFullStatistics(boolean fullStatistics) {
-        this.fullStatistics = fullStatistics;
-    }
 }
