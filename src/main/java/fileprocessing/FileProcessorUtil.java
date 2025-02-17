@@ -20,22 +20,17 @@ public class FileProcessorUtil {
     private boolean shortStatistics;
     private boolean fullStatistics;
 
-    private final String PATH;
-
-    public FileProcessorUtil(ArgumentsParser arguments, String path) {
+    public FileProcessorUtil(ArgumentsParser arguments) {
         this.inputFiles = arguments.getInputFiles();
         this.outputPath = arguments.getOutputPath();
         this.prefix = arguments.getPrefix();
         this.appendMode = arguments.isAppendMode();
         this.shortStatistics = arguments.isShortStatistics();
         this.fullStatistics = arguments.isFullStatistics();
-        this.PATH = path;
     }
 
     public void processFiles() {
 
-        this.outputPath = this.outputPath == null ? PATH : outputPath;
-        this.prefix = this.prefix == null ? "" : this.prefix;
         List<String> dataFromTxt;
         List<String> allDAta = new ArrayList<>();
 
@@ -53,7 +48,7 @@ public class FileProcessorUtil {
 
         // Запись в выходные файлы
         if(!dataFilter.getIntList().isEmpty()) {
-            FileService.writeData(outputPath, prefix + "integers.txt", dataFilter.getIntList(), appendMode);
+            FileService.writeData(outputPath,prefix + "integers.txt", dataFilter.getIntList(), appendMode);
         }
         if (!dataFilter.getFloatList().isEmpty()) {
             FileService.writeData(outputPath, prefix + "floats.txt", dataFilter.getFloatList(), appendMode);

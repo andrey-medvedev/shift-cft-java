@@ -43,7 +43,7 @@ public final class FileService {
             }
             System.out.println("Создание файла прошло успешно");
         } catch (IOException e) {
-            System.out.println("Что-то прошло не так при записи в файл" + e.getMessage());
+            System.out.println("Что-то прошло не так при записи в файл " + e.getMessage());
         }
     }
 

@@ -3,6 +3,7 @@ package org.cft.testtask;
 import arguments.ArgumentsParser;
 import com.beust.jcommander.JCommander;
 import fileprocessing.FileProcessorUtil;
+import validator.ArgumentsValidator;
 
 public class Main {
 
@@ -15,12 +16,11 @@ public class Main {
                      .addObject(argumentsParser)
                      .build()
                      .parse(args);
-         } catch (Exception e) {
-             System.out.println(e.getMessage());
-         }
+         } catch (Exception ignored) {}
 
-         FileProcessorUtil fileProcessorUtil = new FileProcessorUtil(argumentsParser,
-                 "cft-test-task/src/main/resources/");
+        ArgumentsValidator.validate(argumentsParser);
+
+         FileProcessorUtil fileProcessorUtil = new FileProcessorUtil(argumentsParser);
          fileProcessorUtil.processFiles();
 
     }

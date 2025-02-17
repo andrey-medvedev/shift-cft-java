@@ -49,4 +49,28 @@ public class ArgumentsParser {
     public boolean isFullStatistics() {
         return this.fullStatistics;
     }
+
+    public void setInputFiles(List<String> inputFiles) {
+        this.inputFiles = inputFiles;
+    }
+
+    public void setOutputPath(String outputPath) {
+        this.outputPath = outputPath;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public void setAppendMode(boolean appendMode) {
+        this.appendMode = appendMode;
+    }
+
+    public void setShortStatistics(boolean shortStatistics) {
+        this.shortStatistics = shortStatistics;
+    }
+
+    public void setFullStatistics(boolean fullStatistics) {
+        this.fullStatistics = fullStatistics;
+    }
 }
