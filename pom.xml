@@ -35,15 +35,12 @@
   </dependencies>
 
   <build>
-    <finalName>cft-test-task</finalName>
-
     <plugins>
-
       <!-- Плагин для сборки Fat JAR с зависимостями -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <id>make-assembly</id>
@@ -55,8 +52,6 @@
               <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
-              <finalName>TZ_project</finalName>
-              <outputDirectory>${user.home}/Desktop</outputDirectory>
               <archive>
                 <manifest>
                   <mainClass>org.cft.testtask.Main</mainClass>
@@ -78,4 +73,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

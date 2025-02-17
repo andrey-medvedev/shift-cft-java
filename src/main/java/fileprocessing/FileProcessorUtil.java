@@ -36,7 +36,7 @@ public class FileProcessorUtil {
 
         // чтение файлов
         for(String inputFile : inputFiles) {
-            dataFromTxt = FileService.readFile(inputFile);
+            dataFromTxt = FileServiceUtil.readFile(inputFile);
             for(String data : dataFromTxt) {
                 allDAta.add(data);
             }
@@ -48,13 +48,13 @@ public class FileProcessorUtil {
 
         // Запись в выходные файлы
         if(!dataFilter.getIntList().isEmpty()) {
-            FileService.writeData(outputPath,prefix + "integers.txt", dataFilter.getIntList(), appendMode);
+            FileServiceUtil.writeData(outputPath,prefix + "integers.txt", dataFilter.getIntList(), appendMode);
         }
         if (!dataFilter.getFloatList().isEmpty()) {
-            FileService.writeData(outputPath, prefix + "floats.txt", dataFilter.getFloatList(), appendMode);
+            FileServiceUtil.writeData(outputPath, prefix + "floats.txt", dataFilter.getFloatList(), appendMode);
         }
         if (!dataFilter.getStrList().isEmpty()) {
-            FileService.writeData(outputPath, prefix + "strings.txt", dataFilter.getStrList(), appendMode);
+            FileServiceUtil.writeData(outputPath, prefix + "strings.txt", dataFilter.getStrList(), appendMode);
         }
 
         // Сбор и вывод статистики

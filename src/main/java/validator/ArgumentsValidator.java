@@ -3,6 +3,7 @@ package validator;
 import arguments.ArgumentsParser;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 public class ArgumentsValidator {
@@ -25,27 +26,26 @@ public class ArgumentsValidator {
             inputFiles.add("in2.txt");
         }
         for (String filePath : inputFiles) {
-            File file = new File("cft-test-task/src/main/resources/" + filePath);
-            if (!file.exists() || !file.isFile()) {
+            // Использование ClassLoader для загрузки файла из resources
+            InputStream inputStream = ArgumentsValidator.class.getClassLoader().getResourceAsStream(filePath);
+            if (inputStream == null) {
                 System.out.printf("""
-                        Предупреждение: Входной файл %s не найден или не является файлом.
+                        Предупреждение: Входной файл %s не найден в ресурсах.
                         По умолчанию используется файл: in1.txt.
-                        
-                        """, filePath );
+                        """, filePath);
                 inputFiles.set(inputFiles.indexOf(filePath), "in1.txt");
             }
         }
         return inputFiles;
     }
 
-    // попробовать установить абсолютный путь
     private static String validateOutputPath(String outputPath) {
         if (outputPath == null || outputPath.isEmpty()) {
             System.out.println("""
                     Предупреждение: Не указан путь для вывода.
                     По умолчанию используется папка: ./resources/
                     """);
-            return "cft-test-task/src/main/resources/";
+            return "./resources/";
         }
 
         File dir = new File(outputPath);
@@ -54,9 +54,9 @@ public class ArgumentsValidator {
                     Предупреждение: Указанный путь для вывода не является директорией.
                     По умолчанию используется папка: ./resources/
                     """);
-            return "cft-test-task/src/main/resources/";
+            return "./resources/";
         }
-        return outputPath + "\\";
+        return outputPath + File.separator;
     }
 
     private static String validateFilePrefix(String prefix) {
@@ -70,7 +70,7 @@ public class ArgumentsValidator {
         return prefix;
     }
 
-    private static void validateStatisticsFlag (ArgumentsParser arguments) {
+    private static void validateStatisticsFlag(ArgumentsParser arguments) {
         if (arguments.isShortStatistics() && arguments.isFullStatistics()) {
             System.out.println("""
                     Предупреждение: Нельзя одновременно использовать флаги краткой и полной статистики.
