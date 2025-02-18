@@ -35,7 +35,7 @@ public final class FileServiceUtil {
 
         File file = new File(directory, fileName);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, appendMode))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, appendMode))) {
             List<String> stringData = data.stream().map(Object::toString).toList();
             for (String line : stringData) {
                 writer.write(line);
