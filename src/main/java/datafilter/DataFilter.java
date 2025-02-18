@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class DataFilter {
 
-    private final List<Integer> intList;
+    private final List<Long> intList;
     private final List<Float> floatList;
     private final List<String> strList;
 
@@ -31,7 +31,7 @@ public class DataFilter {
     public void filterValues(List<String> args) {
         for(String arg : args) {
             if(isInteger(arg)) {
-                intList.add(Integer.parseInt(arg));
+                intList.add(Long.parseLong(arg));
             } else if (isFloat(arg)) {
                 floatList.add(Float.parseFloat(arg));
             } else {
@@ -46,10 +46,9 @@ public class DataFilter {
      * @param arg строка для проверки.
      * @return {@code true}, если строка является целым числом, иначе {@code false}.
      */
-    // обработка больших чисел
     private boolean isInteger(String arg) {
         try {
-            Integer.parseInt(arg);
+            Long.parseLong(arg);
             return true;
         } catch (NumberFormatException e) {
             return false;

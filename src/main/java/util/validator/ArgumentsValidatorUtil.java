@@ -71,24 +71,22 @@ public final class ArgumentsValidatorUtil {
      * @param outputPath путь для сохранения выходных файлов.
      * @return валидированный путь к выходной директории.
      */
+    // сохраняет в разные места при запуске из ide или консоли
     private static String validateOutputPath(String outputPath) {
         if (outputPath == null || outputPath.isEmpty()) {
-            System.out.println("""
-                    Предупреждение: Не указан путь для вывода.
-                    По умолчанию используется папка: ./resources/
-                    """);
-            return "./resources/";
+            String defaultPath = new File("resources/").getAbsolutePath();
+            System.out.printf("Предупреждение: Не указан путь для вывода. Используется %s\n", defaultPath);
+            return defaultPath;
         }
 
         File dir = new File(outputPath);
         if (!dir.exists() || !dir.isDirectory()) {
-            System.out.println("""
-                    Предупреждение: Указанный путь для вывода не является директорией.
-                    По умолчанию используется папка: ./resources/
-                    """);
-            return "./resources/";
+            String defaultPath = new File("resources/").getAbsolutePath();
+            System.out.printf("Предупреждение: Указанный путь не является директорией. Используется %s\n", defaultPath);
+            return defaultPath;
         }
-        return outputPath + File.separator;
+
+        return dir.getAbsolutePath() + File.separator;
     }
 
     /**

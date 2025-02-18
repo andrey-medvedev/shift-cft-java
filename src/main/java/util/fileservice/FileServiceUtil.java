@@ -1,6 +1,7 @@
 package util.fileservice;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,19 @@ public final class FileServiceUtil {
      * @param appendMode если {@code true}, данные будут добавлены в конец файла; если {@code false}, файл будет перезаписан.
      */
     public static void writeData(String path, String fileName, List<?> data, boolean appendMode) {
-        File file = new File(path, fileName);
+        File directory = new File(path);
+
+        // Проверяем, существует ли директория, если нет — создаем
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                System.out.printf("Создана директория: %s\n", path);
+            } else {
+                System.err.printf("Ошибка: не удалось создать директорию %s\n", path);
+                return;
+            }
+        }
+
+        File file = new File(directory, fileName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, appendMode))) {
             List<String> stringData = data.stream().map(Object::toString).toList();
@@ -29,7 +42,7 @@ public final class FileServiceUtil {
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.printf("Данные записаны в файл %s.\n", fileName);
+            System.out.printf("Данные записаны в файл %s.\n", file.getAbsolutePath());
         } catch (IOException e) {
             System.err.println("Ошибка при записи в файл: " + e.getMessage());
         }
@@ -50,7 +63,7 @@ public final class FileServiceUtil {
                 return Collections.emptyList();
             }
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                 System.out.printf("Чтение файла %s прошло успешно\n", fileName);
                 return reader.lines().collect(Collectors.toList());
             }

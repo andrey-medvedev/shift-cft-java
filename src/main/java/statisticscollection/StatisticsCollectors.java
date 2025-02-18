@@ -12,7 +12,7 @@ public class StatisticsCollectors {
     private final int floatCount;
     private final int strCount;
 
-    private final List<Integer> intList;
+    private final List<Long> intList;
     private final List<Float> floatList;
     private final List<String> strList;
 
@@ -27,7 +27,7 @@ public class StatisticsCollectors {
      * @param strList    список строк
      */
     public StatisticsCollectors(int intCount, int floatCount,
-                                int strCount, List<Integer> intList,
+                                int strCount, List<Long> intList,
                                 List<Float> floatList, List<String> strList) {
         this.intCount = intCount;
         this.floatCount = floatCount;
@@ -71,10 +71,10 @@ public class StatisticsCollectors {
                     Среднее всех чисел = %.2f
                     
                     """,
-                    intList.stream().min(Integer::compareTo).get(),
-                    intList.stream().max(Integer::compareTo).get(),
-                    intList.stream().mapToInt(Integer::intValue).sum(),
-                    intList.stream().mapToInt(Integer::intValue).average().getAsDouble());
+                    intList.stream().min(Long::compareTo).orElse(0L),
+                    intList.stream().max(Long::compareTo).orElse(0L),
+                    intList.stream().mapToLong(Long::longValue).sum(),
+                    intList.stream().mapToLong(Long::longValue).average().orElse(0.0f));
         }
     }
 
@@ -92,28 +92,27 @@ public class StatisticsCollectors {
                     Среднее всех чисел = %.4f
                     
                     """,
-                    floatList.stream().min(Float::compareTo).get(),
-                    floatList.stream().max(Float::compareTo).get(),
+                    floatList.stream().min(Float::compareTo).orElse(0.0f),
+                    floatList.stream().max(Float::compareTo).orElse(0.0f),
                     floatList.stream().mapToDouble(Float::floatValue).sum(),
-                    floatList.stream().mapToDouble(Float::floatValue).average().getAsDouble());
+                    floatList.stream().mapToDouble(Float::floatValue).average().orElse(0.0f));
         }
     }
 
     /**
      * Выводит полную статистику по строкам.
      */
-    // длина самой большой строки выводится не корректно
     private void printStringStatistics() {
         System.out.println("Полная статистика для строк:");
         System.out.printf("Количество строк, добавленных в файл = %d\n", strCount);
         if(strCount > 0) {
             System.out.printf("""
-                    Длинна самой короткой строки = %s
-                    Длина самой длинной строки = %s
+                    Длинна самой короткой строки = %d
+                    Длина самой длинной строки = %d
                     
                     """,
-                    strList.stream().map(String::length).min(Comparator.comparing(Integer::intValue)).get(),
-                    strList.stream().map(String::length).max(Comparator.comparing(Integer::intValue)).get());
+                    strList.stream().map(String::trim).min(Comparator.comparingInt(String::length)).orElse("").length(),
+                    strList.stream().map(String::trim).max(Comparator.comparingInt(String::length)).orElse("").length());
         }
     }
 }
