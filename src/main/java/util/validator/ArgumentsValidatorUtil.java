@@ -11,7 +11,8 @@ import java.util.List;
  */
 public final class ArgumentsValidatorUtil {
 
-    private ArgumentsValidatorUtil() {}
+    private ArgumentsValidatorUtil() {
+    }
 
     /**
      * Валидирует аргументы командной строки.
@@ -57,7 +58,8 @@ public final class ArgumentsValidatorUtil {
                 System.out.printf("""
                         Предупреждение: Входной файл %s не найден в ресурсах.
                         По умолчанию используется файл: in1.txt.
-                        """, filePath);
+                                               \s
+                       \s""", filePath);
                 inputFiles.set(inputFiles.indexOf(filePath), "in1.txt");
             }
         }
@@ -66,23 +68,31 @@ public final class ArgumentsValidatorUtil {
 
     /**
      * Проверяет корректность пути вывода.
-     * Если путь не указан или некорректен, используется папка по умолчанию (`./resources/`) в target.
+     * Если путь не указан или некорректен, создается папка по умолчанию (`output-files`) в target,
+     * если запускается из консоли или в корне проекта, если запускается из IDE.
      *
      * @param outputPath путь для сохранения выходных файлов.
      * @return валидированный путь к выходной директории.
      */
-    // сохраняет в разные места при запуске из ide или консоли
     private static String validateOutputPath(String outputPath) {
         if (outputPath == null || outputPath.isEmpty()) {
-            String defaultPath = new File("resources/").getAbsolutePath();
-            System.out.printf("Предупреждение: Не указан путь для вывода. Используется %s\n", defaultPath);
+            String defaultPath = new File("output-files/").getAbsolutePath();
+            System.out.printf("""
+                    Предупреждение: Не указан путь для вывода.
+                    По умолчанию используется %s
+
+                    """, defaultPath);
             return defaultPath;
         }
 
         File dir = new File(outputPath);
         if (!dir.exists() || !dir.isDirectory()) {
-            String defaultPath = new File("resources/").getAbsolutePath();
-            System.out.printf("Предупреждение: Указанный путь не является директорией. Используется %s\n", defaultPath);
+            String defaultPath = new File("output-files/").getAbsolutePath();
+            System.out.printf("""
+                    Предупреждение: Указанный путь не является директорией.
+                    По умолчанию используется %s
+                               \s
+                   \s""", defaultPath);
             return defaultPath;
         }
 

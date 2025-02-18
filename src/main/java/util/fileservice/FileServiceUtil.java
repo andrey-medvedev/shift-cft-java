@@ -24,7 +24,6 @@ public final class FileServiceUtil {
     public static void writeData(String path, String fileName, List<?> data, boolean appendMode) {
         File directory = new File(path);
 
-        // Проверяем, существует ли директория, если нет — создаем
         if (!directory.exists()) {
             if (directory.mkdirs()) {
                 System.out.printf("Создана директория: %s\n", path);

@@ -41,6 +41,7 @@ public class StatisticsCollectors {
      * Выводит краткую статистику о количестве добавленных элементов.
      */
     public void printShortStatistics() {
+        System.out.println();
         System.out.println("Короткая статистика:");
         System.out.printf("Количество целых чисел, добавленных в файл = %d\n", intCount);
         System.out.printf("Количество вещественных чисел, добавленных в файл = %d\n", floatCount);
