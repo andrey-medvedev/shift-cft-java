@@ -79,7 +79,7 @@ Apache Maven 3.9.9
 
 ### Сторонние библиотеки
 
-Все использованные библиотеки можно посмотреть ниже или в [pom.xml]().
+Все использованные библиотеки можно посмотреть ниже или в [pom.xml](https://github.com/andrey-medvedev/shift-cft-java/blob/master/pom.xml).
 
 ```
 <dependencies>
